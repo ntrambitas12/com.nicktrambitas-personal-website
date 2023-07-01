@@ -24,11 +24,17 @@ const props = defineProps({
 onMounted(() => {
   // To get scroll data and react to a scroll event, add a listener
   window.addEventListener('scroll', setScroll)
+  window.addEventListener('resize', setHeight)
 })
 const scrollData = ref(0)
+const screenHeight = ref(`${window.innerHeight}px`)
 
 const setScroll = () => {
   scrollData.value = window.scrollY
+}
+
+const setHeight = () => {
+  screenHeight.value = `${window.innerHeight}px`
 }
 
 const zoomImage = computed(() => {
@@ -48,9 +54,9 @@ const zoomImage = computed(() => {
   position: absolute;
   top: 50%;
   left: 50%;
-  @media screen and (max-width: 750px){
-    width: 50%;
-  }
+  // @media screen and (max-width: 750px){
+  //   width: 50%;
+  // }
   width: 100%;
   transform: translate(-50%, -50%);
 }
@@ -74,8 +80,8 @@ const zoomImage = computed(() => {
   }
 
   @media screen and (min-width: 280px) and (max-width: 500px){
-    padding-top: 28.5rem;
-    font-size: 2.5rem;
+    padding-top: 18.5rem;
+    font-size: 3.7rem;
 
   }
 
@@ -140,6 +146,9 @@ const zoomImage = computed(() => {
   width: 100%;
   object-fit: cover;
   object-position: top center;
+  @media screen and (max-width: 760px){
+  height: v-bind(screenHeight);
+}
 }
 
 </style>

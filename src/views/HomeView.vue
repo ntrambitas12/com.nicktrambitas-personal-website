@@ -10,34 +10,48 @@ import { ref, onMounted, onBeforeMount } from 'vue'
 
 import 'vue3-carousel/dist/carousel.css'
 import { useContentStore } from '@/stores/content'
-// Image imports
-import BackgroundImage from '@/assets/background.jpg'
-import BioPic from '@/assets/bioPic.jpg'
-import MyVoltControl from '@/assets/cadillac.jpg'
-import GithubIcon from '@/assets/github.png'
-import ResumeIcon from '@/assets/resume.png'
 
-const content = { name: 'Nicholas Trâmbițaș', subheading: 'Computer Scientist & Engineer' }
-const aboutMe = 'About Me'
-const bioContent = 'Hi! My name is Nick Trambitas. I am an avid software enginner with a passion for cars and planes. From a young age, I`ve had a passion for technology and coding. I enjoy learning about how the world works.'
-const projectSlides = [{ content: 'A simple C# program that allows a user to test a bunch of stuff. This is still a work inn progress but were getting close. This is some sample long text to test for formatting. Good night and sweet dreams', img: MyVoltControl, heading: 'MyVoltControl', imgLink: 'https://www.cadillac.com' }, { content: 'A simple C# program that allows a user to test a bunch of stuff. This is still a work inn progress but were getting close. Good night and sweet dreams', img: MyVoltControl, heading: 'MyVoltControl', imgLink: 'https://www.cadillac.com' }]
-const projects = 'My Experiences'
+const welcomeCardData = ref(null)
+const welcomeCardImage = ref(null)
+const aboutMe = ref(null)
+const bioContent = ref(null)
+const bioPic = ref(null)
+const projectsHeading = ref(null)
+const projectsDescription = ref(null)
+const projectSlides = ref(null)
 const stickyPoint = ref(0)
 const aboutMeRef = ref(null)
-const links = [{ path: '', hash: '#home', text: 'Home Page' }, { path: '', hash: '#aboutMe', text: 'About Me' }, { path: '', hash: '#projects', text: 'Project Stuff' }]
-const linkData = [{ URL: 'https://www.github.com', text: 'My GitHub', imgSrc: GithubIcon }, { URL: '/resume', text: 'View Resume', imgSrc: ResumeIcon }]
-const footerContent = { heading: 'Let\'s keep in touch', subheading: 'Feel free to reach out to me in any of the ways below!' }
-const footerLinks = [{ imgSrc: GithubIcon, content: 'Instagram', URL: 'https://www.instagram.com' }, { imgSrc: GithubIcon, content: 'Snapchat', URL: 'https://www.instagram.com' }, { imgSrc: GithubIcon, content: 'Whatsapp', URL: 'https://www.instagram.com' }, { imgSrc: GithubIcon, content: 'Facebook', URL: 'https://www.instagram.com' }]
+const navBarLinks = ref(null)
+const footerContent = ref(null)
+const mainPageButtons = ref(null)
+const footerLinks = ref(null)
 const preventScroll = ref(false)
-const contentStore = useContentStore()
 
 onMounted(() => {
   stickyPoint.value = aboutMeRef.value.offsetTop
 })
 
 onBeforeMount(() => {
-  contentStore.loadMainPage()
+  loadContent()
 })
+
+async function loadContent () {
+  const contentStore = useContentStore()
+  await contentStore.loadMainPage()
+  const mainPageContent = contentStore.getMainPageContent
+  welcomeCardData.value = { name: mainPageContent?.mainPageHeading, subheading: mainPageContent?.mainPageSubheading }
+  welcomeCardImage.value = mainPageContent?.mainPageWelcomeCardPhoto
+  aboutMe.value = mainPageContent?.aboutMeHeading
+  bioContent.value = mainPageContent?.aboutMeText
+  bioPic.value = mainPageContent?.aboutMePhoto
+  projectsHeading.value = mainPageContent?.myExperiencesHeading
+  projectsDescription.value = mainPageContent?.myExperiencesText
+  navBarLinks.value = contentStore.getNavBarLinks
+  footerContent.value = contentStore.getFooterContent
+  footerLinks.value = contentStore.getFooterLinks
+  mainPageButtons.value = contentStore.getMainPageButtons
+  projectSlides.value = contentStore.getCarouselSlides
+}
 
 const toggleScrolling = () => {
   preventScroll.value = !preventScroll.value
@@ -51,32 +65,27 @@ const toggleScrolling = () => {
 </script>
 
 <template>
-  <NavBar :links="links"
-          :navbar-sticky-point="stickyPoint.value"
-           @toggle-scroll="toggleScrolling()"/>
-<div id="home">
-    <WelcomeCard :image="BackgroundImage"
-                 :content="content"/>
-  <div ref="aboutMeRef" class="aboutMe" id="aboutMe">
-      <h1 class="aboutMeHeading">{{ aboutMe }}</h1>
-      <CardWithPhoto  :image="BioPic"
-                      :content="bioContent"/>
-  </div>
-  <div class="projects">
-      <h1 class="projectHeader">{{ projects }}</h1>
-      <p class="projectDescription">Below, you will find a collection of some of my favorite projects that I've worked on both professionally and for fun. My expeience ranges from developing full-fleged applications in VueJS, C#, and Java to writing embedded software in C for Aerospace and Automotive applications. I also have a strong background in CANBUS and diagnosing Automotive electronics and networks/ </p>
-      <CarouselSlider :carousel-content="projectSlides"/>
-      <ProjectSubLinks :link-data="linkData"/>
-  </div>
-  <div class="footer">
-    <FooterCard :content="footerContent"
-                :links="footerLinks"  />
-  </div>
-</div>
+
+    <NavBar :links="navBarLinks" :navbar-sticky-point="stickyPoint.value" @toggle-scroll="toggleScrolling()" />
+    <div id="home">
+      <WelcomeCard :image="welcomeCardImage" :content="welcomeCardData" />
+      <div ref="aboutMeRef" class="aboutMe" id="aboutMe">
+        <h1 class="aboutMeHeading">{{ aboutMe }}</h1>
+        <CardWithPhoto :image="bioPic" :content="bioContent" />
+      </div>
+      <div class="projects">
+        <h1 class="projectHeader">{{ projectsHeading }}</h1>
+        <p class="projectDescription">{{ projectsDescription }}</p>
+        <CarouselSlider :carousel-content="projectSlides" />
+        <ProjectSubLinks :link-data="mainPageButtons" />
+      </div>
+      <div class="footer">
+        <FooterCard :content="footerContent" :links="footerLinks" />
+      </div>
+    </div>
 </template>
 
 <style lang="scss">
-
 .no-scroll {
   overflow: hidden;
 }
@@ -85,8 +94,13 @@ const toggleScrolling = () => {
   margin-top: 1.5rem;
 }
 
+.aboutMeHeading {
+  margin-bottom: 0;
+  margin-top: 1em;
+}
+
 .projectHeader {
-  padding-bottom: 0.5em;
+  margin-bottom: 0;
 }
 
 .projects {
@@ -96,7 +110,13 @@ const toggleScrolling = () => {
 
 .projectDescription {
   width: 65%;
+  font-size: 1.1rem;
   align-self: center;
+  padding-bottom: 1em;
+  @media screen and (max-width: 800px) {
+    font-size: 0.95rem;
+    width: 70%;
+    padding-bottom: 0;
+  }
 }
-
 </style>

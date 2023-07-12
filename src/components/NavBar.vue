@@ -57,7 +57,7 @@ onMounted(() => {
   <div class="nav__right">
     <ul v-if="!isMobile" class="navLinks">
        <li v-for="(link, index) in props.links" :key="index">
-         <router-link :to="{path: link?.path, hash: link?.hash}" class="link">{{ link?.text }}</router-link>
+         <router-link :to="{path: link?.path ?? '', hash: link?.hash ?? ''}" class="link">{{ link?.text }}</router-link>
        </li>
     </ul>
   </div>
@@ -68,7 +68,7 @@ onMounted(() => {
     </div>
     <ul class="mobileList">
        <li @click="showMobileDrawer()" v-for="(link, index) in props.links" :key="index" class="mobileLinks">
-         <router-link :to="{path: link?.path, hash: link?.hash}" class="mobileLink" >{{ link?.text }}</router-link>
+         <router-link :to="{path: link?.path ?? '', hash: link?.hash ?? ''}" class="mobileLink" >{{ link?.text }}</router-link>
        </li>
     </ul>
 </div>
@@ -98,7 +98,7 @@ onMounted(() => {
     }
 
     .link {
-        @media screen and (max-width: 850px){
+        @media screen and (max-width: 950px){
             font-size: 1.2em;
         }
     padding: 0.5em 1em 0.5em 1em;

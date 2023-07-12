@@ -12,8 +12,8 @@ const props = defineProps({
 <template>
    <div class="projectButtons">
         <div v-for="(link, index) in props.linkData" :key="index"  class="linkContainer">
-          <a :href="link?.URL" class="linkContent">
-            <img :src="link?.imgSrc ?? ''" class="linkImage"/>
+          <a :href="link?.url" class="linkContent">
+            <img :src="link?.image ?? ''" class="linkImage"/>
             <span class="linkText">{{ link?.text  }}</span>
             </a>
         </div>

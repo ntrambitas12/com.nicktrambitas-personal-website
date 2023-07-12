@@ -15,13 +15,13 @@ const props = defineProps({
 
 <template>
     <div class="footerCard">
-        <h1>{{ props.content.heading}}</h1>
-        <h3> {{ props.content.subheading }}</h3>
+        <h1>{{ props.content?.footerHeading}}</h1>
+        <h3> {{ props.content?.footerSubheading }}</h3>
         <ul class="footerList">
             <li v-for="(link, index) in props.links" :key="index">
-               <a :href="link?.URL" class="footerElements">
-                <img :src="link?.imgSrc ?? ''" class="linkImage"/>
-                <span class="linkText">{{ link?.content }}</span>
+               <a :href="link?.url" class="footerElements">
+                <img :src="link?.image ?? ''" class="linkImage"/>
+                <span class="linkText">{{ link?.text }}</span>
                </a>
             </li>
         </ul>

@@ -33,12 +33,12 @@ const shouldShowNav = computed(() => {
         <Carousel :wrap-around="true">
           <Slide v-for="slide in props?.carouselContent" :key="slide">
           <div class="carousel__item">
-            <a :href="slide?.imgLink" class="carousel__link">
-              <img :src="slide?.img" alt="Slide Image" class="carousel__image">
+            <a :href="slide?.slideLink" class="carousel__link">
+              <img :src="slide?.slideImage" alt="Slide Image" class="carousel__image">
             </a>
             <div class="carousel__content">
-              <h4 class="carousel__title">{{ slide?.heading }}</h4>
-              <p class="carousel__description">{{ slide?.content }}</p>
+              <h4 class="carousel__title">{{ slide?.slideHeading }}</h4>
+              <p class="carousel__description">{{ slide?.slideContent }}</p>
             </div>
           </div>
           </Slide>
@@ -61,19 +61,19 @@ const shouldShowNav = computed(() => {
 }
 .carousel__item {
 
-    @media screen and (min-width: 500px) and (max-width: 800px) {
+    @media screen and (min-width: 530px) and (max-width: 800px) {
     flex-direction: column;
     gap: 2rem;
     padding: 0rem 4rem 4.5rem 4rem;
   }
 
-  @media screen and (min-width: 330px) and (max-width: 500px) {
+  @media screen and (min-width: 380px) and (max-width: 530px) {
     flex-direction: column;
     gap: 2rem;
     padding: 0rem 3.5rem 7rem 3.5rem;
   }
 
-  @media screen and (max-width: 330px) {
+  @media screen and (max-width: 380px) {
     flex-direction: column;
     gap: 2rem;
     padding: 0rem 3.5rem 10rem 3.5rem;
@@ -106,12 +106,12 @@ const shouldShowNav = computed(() => {
     width: 17%;
   }
 
-  @media screen and (min-width: 800px) and (max-width: 950px) {
+  @media screen and (min-width: 860px) and (max-width: 950px) {
     height: 120%;
     width: 25%;
   }
 
-  @media screen and (min-width: 400px) and (max-width: 800px) {
+  @media screen and (min-width: 400px) and (max-width: 860px) {
     height: 40%;
     width: 25%;
   }
@@ -149,7 +149,7 @@ const shouldShowNav = computed(() => {
 }
 
 .carousel__description {
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 730px) {
     font-size: .95em;
     line-height: 1.3;
   }
@@ -160,7 +160,7 @@ const shouldShowNav = computed(() => {
 }
 
 .carousel__title {
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 730px) {
     font-size: 1.3em;
   }
     color: #fff;

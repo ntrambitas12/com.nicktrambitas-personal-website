@@ -7,7 +7,7 @@ const props = defineProps({
     default: () => ''
   },
   content: {
-    type: Object,
+    type: String,
     default: () => {}
   }
 })
@@ -86,7 +86,7 @@ const props = defineProps({
     font-size: 0.95rem;
     padding-top: 2rem;
     padding-right: 0;
-
+    width: 70%;
   }
 
   /* display: block; */

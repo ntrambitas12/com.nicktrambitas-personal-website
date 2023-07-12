@@ -6,10 +6,10 @@ import CardWithPhoto from '@/components/CardWithPhoto.vue'
 import CarouselSlider from '@/components/CarouselSlider.vue'
 import ProjectSubLinks from '@/components/ProjectSubLinks.vue'
 import FooterCard from '@/components/FooterCard.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 
 import 'vue3-carousel/dist/carousel.css'
-
+import { useContentStore } from '@/stores/content'
 // Image imports
 import BackgroundImage from '@/assets/background.jpg'
 import BioPic from '@/assets/bioPic.jpg'
@@ -29,8 +29,14 @@ const linkData = [{ URL: 'https://www.github.com', text: 'My GitHub', imgSrc: Gi
 const footerContent = { heading: 'Let\'s keep in touch', subheading: 'Feel free to reach out to me in any of the ways below!' }
 const footerLinks = [{ imgSrc: GithubIcon, content: 'Instagram', URL: 'https://www.instagram.com' }, { imgSrc: GithubIcon, content: 'Snapchat', URL: 'https://www.instagram.com' }, { imgSrc: GithubIcon, content: 'Whatsapp', URL: 'https://www.instagram.com' }, { imgSrc: GithubIcon, content: 'Facebook', URL: 'https://www.instagram.com' }]
 const preventScroll = ref(false)
+const contentStore = useContentStore()
+
 onMounted(() => {
   stickyPoint.value = aboutMeRef.value.offsetTop
+})
+
+onBeforeMount(() => {
+  contentStore.loadMainPage()
 })
 
 const toggleScrolling = () => {

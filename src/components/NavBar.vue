@@ -20,7 +20,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle-scroll'])
 
 const handleScroll = () => {
-  navClass.value = (window.scrollY >= props.navbarStickyPoint) ? 'navBar sticky' : 'navBar'
+  navClass.value = (window.scrollY - 100 >= props.navbarStickyPoint) ? 'navBar sticky' : 'navBar'
 }
 
 const handleResize = () => {

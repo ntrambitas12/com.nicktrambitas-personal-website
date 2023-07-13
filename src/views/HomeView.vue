@@ -48,13 +48,13 @@ const toggleScrolling = () => {
         <CardWithPhoto :image="contentStore.getMainPageContent?.aboutMePhoto"
          :content="contentStore.getMainPageContent?.aboutMeText" />
       </div>
-      <div class="projects">
+      <div class="projects" id="projects">
         <h1 class="projectHeader">{{ contentStore.getMainPageContent?.myExperiencesHeading }}</h1>
         <p class="projectDescription">{{ contentStore.getMainPageContent?.myExperiencesText }}</p>
         <CarouselSlider :carousel-content="contentStore.getCarouselSlides" />
         <ProjectSubLinks :link-data="contentStore.getMainPageButtons" />
       </div>
-      <div class="footer">
+      <div class="footer" id="contact">
         <FooterCard :content="contentStore.getFooterContent" :links="contentStore.getFooterLinks" />
       </div>
     </div>

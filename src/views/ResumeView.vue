@@ -26,6 +26,7 @@ import Resume from '@/assets/Hybrid-EV Controls.pdf'
     border-radius: 5em;
     cursor: pointer;
     transition: all 0.5s;
+    padding-bottom: 1rem;
  }
 
  .PDFViewer {

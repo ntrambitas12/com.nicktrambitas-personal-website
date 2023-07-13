@@ -41,8 +41,8 @@ const toggleScrolling = () => {
     <div id="home">
       <WelcomeCard :image="contentStore.getMainPageContent?.mainPageWelcomeCardPhoto"
       :content="{ name: contentStore.getMainPageContent?.mainPageHeading, subheading: contentStore.getMainPageContent?.mainPageSubheading }" />
-      <div class="aboutMe" id="aboutMe">
-        <h1 ref="aboutMeRef" class="aboutMeHeading">{{ contentStore.getMainPageContent?.aboutMeHeading }}</h1>
+      <div class="aboutMe" id="aboutMe" ref="aboutMeRef">
+        <h1 class="aboutMeHeading">{{ contentStore.getMainPageContent?.aboutMeHeading }}</h1>
         <CardWithPhoto :image="contentStore.getMainPageContent?.aboutMePhoto"
          :content="contentStore.getMainPageContent?.aboutMeText" />
       </div>

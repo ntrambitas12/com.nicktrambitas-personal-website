@@ -67,8 +67,8 @@ onMounted(() => {
         <img class="navPic" src="https://placehold.co/60" @click="showMobileDrawer()"/>
     </div>
     <ul class="mobileList">
-       <li @click="showMobileDrawer()" v-for="(link, index) in props.links" :key="index" class="mobileLinks">
-         <router-link :to="{path: link?.path ?? '', hash: link?.hash ?? ''}" class="mobileLink" >{{ link?.text }}</router-link>
+       <li v-for="(link, index) in props.links" :key="index" class="mobileLinks">
+         <router-link  @click="showMobileDrawer()" :to="{path: link?.path ?? '', hash: link?.hash ?? ''}" class="mobileLink" >{{ link?.text }}</router-link>
        </li>
     </ul>
 </div>

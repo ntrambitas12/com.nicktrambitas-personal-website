@@ -14,7 +14,6 @@ import 'vue3-carousel/dist/carousel.css'
 import { useContentStore } from '@/stores/content'
 const contentStore = useContentStore()
 
-const stickyPoint = ref(0)
 const aboutMeRef = ref(null)
 const preventScroll = ref(false)
 const pageLoaded = ref(false)
@@ -22,7 +21,6 @@ const pageLoaded = ref(false)
 onMounted(async () => {
   await contentStore.loadMainPage()
   pageLoaded.value = true
-  stickyPoint.value = aboutMeRef?.value?.offsetTop
 })
 
 const toggleScrolling = () => {
@@ -39,12 +37,12 @@ const toggleScrolling = () => {
 <template>
   <transition name="fade">
   <div v-if="pageLoaded">
-    <NavBar :links="contentStore.getNavBarLinks" :navbar-sticky-point="stickyPoint?.value" @toggle-scroll="toggleScrolling()" />
+    <NavBar :links="contentStore.getNavBarLinks" :navbar-sticky-point="aboutMeRef?.value?.offsetTop" @toggle-scroll="toggleScrolling()" />
     <div id="home">
       <WelcomeCard :image="contentStore.getMainPageContent?.mainPageWelcomeCardPhoto"
       :content="{ name: contentStore.getMainPageContent?.mainPageHeading, subheading: contentStore.getMainPageContent?.mainPageSubheading }" />
-      <div ref="aboutMeRef" class="aboutMe" id="aboutMe">
-        <h1 class="aboutMeHeading">{{ contentStore.getMainPageContent?.aboutMeHeading }}</h1>
+      <div class="aboutMe" id="aboutMe">
+        <h1 ref="aboutMeRef" class="aboutMeHeading">{{ contentStore.getMainPageContent?.aboutMeHeading }}</h1>
         <CardWithPhoto :image="contentStore.getMainPageContent?.aboutMePhoto"
          :content="contentStore.getMainPageContent?.aboutMeText" />
       </div>

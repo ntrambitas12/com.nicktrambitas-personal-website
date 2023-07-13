@@ -95,12 +95,14 @@ const toggleScrolling = () => {
 }
 
 .aboutMeHeading {
-  margin-bottom: 0;
   margin-top: 1em;
+  @media screen and (min-width: 800px) {
+    margin-bottom: 0;
+  }
 }
 
 .projectHeader {
-  margin-bottom: 0;
+  margin-bottom: 0.1em;
 }
 
 .projects {

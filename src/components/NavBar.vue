@@ -143,10 +143,10 @@ onMounted(() => {
 
     .mobileList {
      @media screen and (min-width: 450px) and (max-width: 760px){
-            flex-grow: .75;
+            flex-grow: .2;
     }
     @media screen and (min-width: 410px) and (max-width: 450px){
-            flex-grow: .4;
+            flex-grow: .3;
     }
 
     @media screen and (min-width: 350px) and (max-width: 410px){

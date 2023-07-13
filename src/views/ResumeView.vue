@@ -6,7 +6,9 @@ import Resume from '@/assets/Hybrid-EV Controls.pdf'
   <div class="ResumeView">
     <h1>Resume</h1>
     <embed :src="Resume" type="application/pdf" width="100%" height="600px" class="PDFViewer" />
+   <div class="ResumeLinkContainer">
     <a @click="$router.go(-1)" class="ResumeLink" >Go Back</a>
+   </div>
   </div>
 </template>
  <style>
@@ -26,9 +28,11 @@ import Resume from '@/assets/Hybrid-EV Controls.pdf'
     border-radius: 5em;
     cursor: pointer;
     transition: all 0.5s;
-    padding-bottom: 1rem;
  }
 
+ .ResumeLinkContainer {
+  padding-bottom: 5rem;
+ }
  .PDFViewer {
   padding-bottom: 5rem;
  }

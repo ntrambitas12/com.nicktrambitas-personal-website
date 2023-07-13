@@ -5,53 +5,25 @@ import WelcomeCard from '@/components/HeadingSubheadingCard.vue'
 import CardWithPhoto from '@/components/CardWithPhoto.vue'
 import CarouselSlider from '@/components/CarouselSlider.vue'
 import ProjectSubLinks from '@/components/ProjectSubLinks.vue'
+import SuspenseDots from '@/assets/suspense.gif'
 import FooterCard from '@/components/FooterCard.vue'
-import { ref, onMounted, onBeforeMount } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import 'vue3-carousel/dist/carousel.css'
-import { useContentStore } from '@/stores/content'
 
-const welcomeCardData = ref(null)
-const welcomeCardImage = ref(null)
-const aboutMe = ref(null)
-const bioContent = ref(null)
-const bioPic = ref(null)
-const projectsHeading = ref(null)
-const projectsDescription = ref(null)
-const projectSlides = ref(null)
+import { useContentStore } from '@/stores/content'
+const contentStore = useContentStore()
+
 const stickyPoint = ref(0)
 const aboutMeRef = ref(null)
-const navBarLinks = ref(null)
-const footerContent = ref(null)
-const mainPageButtons = ref(null)
-const footerLinks = ref(null)
 const preventScroll = ref(false)
+const pageLoaded = ref(false)
 
-onMounted(() => {
-  stickyPoint.value = aboutMeRef.value.offsetTop
-})
-
-onBeforeMount(() => {
-  loadContent()
-})
-
-async function loadContent () {
-  const contentStore = useContentStore()
+onMounted(async () => {
   await contentStore.loadMainPage()
-  const mainPageContent = contentStore.getMainPageContent
-  welcomeCardData.value = { name: mainPageContent?.mainPageHeading, subheading: mainPageContent?.mainPageSubheading }
-  welcomeCardImage.value = mainPageContent?.mainPageWelcomeCardPhoto
-  aboutMe.value = mainPageContent?.aboutMeHeading
-  bioContent.value = mainPageContent?.aboutMeText
-  bioPic.value = mainPageContent?.aboutMePhoto
-  projectsHeading.value = mainPageContent?.myExperiencesHeading
-  projectsDescription.value = mainPageContent?.myExperiencesText
-  navBarLinks.value = contentStore.getNavBarLinks
-  footerContent.value = contentStore.getFooterContent
-  footerLinks.value = contentStore.getFooterLinks
-  mainPageButtons.value = contentStore.getMainPageButtons
-  projectSlides.value = contentStore.getCarouselSlides
-}
+  pageLoaded.value = true
+  stickyPoint.value = aboutMeRef?.value?.offsetTop
+})
 
 const toggleScrolling = () => {
   preventScroll.value = !preventScroll.value
@@ -65,27 +37,51 @@ const toggleScrolling = () => {
 </script>
 
 <template>
-
-    <NavBar :links="navBarLinks" :navbar-sticky-point="stickyPoint.value" @toggle-scroll="toggleScrolling()" />
+  <transition name="fade">
+  <div v-if="pageLoaded">
+    <NavBar :links="contentStore.getNavBarLinks" :navbar-sticky-point="stickyPoint?.value" @toggle-scroll="toggleScrolling()" />
     <div id="home">
-      <WelcomeCard :image="welcomeCardImage" :content="welcomeCardData" />
+      <WelcomeCard :image="contentStore.getMainPageContent?.mainPageWelcomeCardPhoto"
+      :content="{ name: contentStore.getMainPageContent?.mainPageHeading, subheading: contentStore.getMainPageContent?.mainPageSubheading }" />
       <div ref="aboutMeRef" class="aboutMe" id="aboutMe">
-        <h1 class="aboutMeHeading">{{ aboutMe }}</h1>
-        <CardWithPhoto :image="bioPic" :content="bioContent" />
+        <h1 class="aboutMeHeading">{{ contentStore.getMainPageContent?.aboutMeHeading }}</h1>
+        <CardWithPhoto :image="contentStore.getMainPageContent?.aboutMePhoto"
+         :content="contentStore.getMainPageContent?.aboutMeText" />
       </div>
       <div class="projects">
-        <h1 class="projectHeader">{{ projectsHeading }}</h1>
-        <p class="projectDescription">{{ projectsDescription }}</p>
-        <CarouselSlider :carousel-content="projectSlides" />
-        <ProjectSubLinks :link-data="mainPageButtons" />
+        <h1 class="projectHeader">{{ contentStore.getMainPageContent?.myExperiencesHeading }}</h1>
+        <p class="projectDescription">{{ contentStore.getMainPageContent?.myExperiencesText }}</p>
+        <CarouselSlider :carousel-content="contentStore.getCarouselSlides" />
+        <ProjectSubLinks :link-data="contentStore.getMainPageButtons" />
       </div>
       <div class="footer">
-        <FooterCard :content="footerContent" :links="footerLinks" />
+        <FooterCard :content="contentStore.getFooterContent" :links="contentStore.getFooterLinks" />
       </div>
     </div>
+  </div>
+  <div class="suspenseLoading" v-else>
+    <img :src="SuspenseDots"/>
+  </div>
+</transition>
 </template>
 
 <style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.suspenseLoading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 .no-scroll {
   overflow: hidden;
 }

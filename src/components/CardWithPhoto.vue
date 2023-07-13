@@ -63,9 +63,6 @@ const props = defineProps({
   transition: transform 0.3s ease;
 }
 
-/* .photoFrame {
-  border: 20px solid #b8a07e;
-} */
 .bioImage:hover {
   z-index: 1;
   transform: translateY(-1px);

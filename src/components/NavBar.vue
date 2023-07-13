@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps, defineEmits, onMounted, ref } from 'vue'
+import hamburgerIcon from '@/assets/nav-hamburger.png'
+import closeIcon from '@/assets/nav-close.png'
 const navClass = ref('navBar')
 const isMobile = ref(false)
 const isDrawerActive = ref(false)
@@ -52,7 +54,7 @@ onMounted(() => {
 <template>
  <nav v-if="!isDrawerActive" :class="navClass">
   <div class="nav__left">
-   <img v-if="isMobile" class="navPic" src="https://placehold.co/60" @click="showMobileDrawer()"/>
+   <img v-if="isMobile" class="navPic" :src="hamburgerIcon" alt="menu-rounded" @click="showMobileDrawer()"/>
   </div>
   <div class="nav__right">
     <ul v-if="!isMobile" class="navLinks">
@@ -64,7 +66,7 @@ onMounted(() => {
 </nav>
 <div v-if="isDrawerActive" class="mobileDrawer">
     <div class="closeDrawer">
-        <img class="navPic" src="https://placehold.co/60" @click="showMobileDrawer()"/>
+        <img class="navPic" :src="closeIcon" @click="showMobileDrawer()"/>
     </div>
     <ul class="mobileList">
        <li v-for="(link, index) in props.links" :key="index" class="mobileLinks">

@@ -83,8 +83,7 @@ const zoomImage = computed(() => {
   }
 
   @media screen and (max-width: 280px){
-    padding-top: 29rem;
-    font-size: 2rem;
+    font-size: 2.8rem;
 
   }
   font-size: 4.5rem;
@@ -94,33 +93,17 @@ const zoomImage = computed(() => {
   color: rgb(238, 242, 242);
 }
 .Subheading{
-  @media screen and (min-width: 750px) and (max-width: 1090px) {
+  @media screen and (min-width: 400px) and (max-width: 1090px) {
     font-size: 1.4rem;
   }
 
-  @media screen and (min-width: 525px)  and (max-width: 750px){
+  @media screen and (min-width: 280px) and (max-width: 400px){
+
     font-size: 1.2rem;
-
-  }
-
-  @media screen and (min-width: 450px) and (max-width: 525px){
-    font-size: 1rem;
-
-  }
-
-  @media screen and (min-width: 350px) and (max-width: 450px){
-
-    font-size: .8rem;
-
-  }
-
-  @media screen and (min-width: 280px) and (max-width: 350px){
-
-    font-size: .7rem;
 }
   @media screen and (max-width: 280px){
 
-    font-size: .55rem;
+    font-size: .9rem;
 }
   font-size: 2.4rem;
   padding-bottom: 31rem;

@@ -52,7 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
- <nav v-if="!isDrawerActive" :class="navClass">
+    <nav v-if="!isDrawerActive" :class="navClass">
   <div class="nav__left">
    <img v-if="isMobile" class="navPic" :src="hamburgerIcon" alt="menu-rounded" @click="showMobileDrawer()"/>
   </div>
@@ -64,6 +64,7 @@ onMounted(() => {
     </ul>
   </div>
 </nav>
+<transition name="slide">
 <div v-if="isDrawerActive" class="mobileDrawer">
     <div class="closeDrawer">
         <img class="navPic" :src="closeIcon" @click="showMobileDrawer()"/>
@@ -74,9 +75,23 @@ onMounted(() => {
        </li>
     </ul>
 </div>
+</transition>
 </template>
 
 <style lang="scss">
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.5s;
+}
+
+.slide-leave-active,
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+
+.slide-enter-to {
+  transform: translateX(10%);
+}
     .navBar {
     display: flex;
     flex-direction: row;

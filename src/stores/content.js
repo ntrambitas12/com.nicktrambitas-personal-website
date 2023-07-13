@@ -91,7 +91,6 @@ export const useContentStore = defineStore('content', {
       this.mainPageButtons = []
       const payload = await this.requestPayload(process.env.VUE_APP_API_MAINPAGEBUTTONS_ID)
       const apiData = payload?.includes
-      console.log(payload)
       for (let i = 0; i < apiData?.Entry?.length; i++) {
         this.mainPageButtons.push(this.resolveContentAssetLinks(apiData?.Entry[i]?.fields, apiData))
       }

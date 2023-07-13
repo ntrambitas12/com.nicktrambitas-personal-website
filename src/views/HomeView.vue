@@ -99,9 +99,17 @@ const toggleScrolling = () => {
   @media screen and (min-width: 800px) {
     margin-bottom: 0;
   }
+
+  @media screen and (max-width: 400px) {
+    font-size: 1.8em
+  }
+
 }
 
 .projectHeader {
+  @media screen and (max-width: 400px) {
+    font-size: 1.8em
+  }
   margin-bottom: 0.1em;
 }
 

@@ -54,9 +54,6 @@ const zoomImage = computed(() => {
   position: absolute;
   top: 50%;
   left: 50%;
-  // @media screen and (max-width: 750px){
-  //   width: 50%;
-  // }
   width: 100%;
   transform: translate(-50%, -50%);
 }

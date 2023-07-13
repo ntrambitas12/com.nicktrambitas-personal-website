@@ -89,9 +89,6 @@ onMounted(() => {
   transform: translateX(-100%);
 }
 
-.slide-enter-to {
-  transform: translateX(10%);
-}
     .navBar {
     display: flex;
     flex-direction: row;

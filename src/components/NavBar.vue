@@ -129,6 +129,12 @@ onMounted(() => {
     flex-grow: 0;
     }
 
+    .closeDrawer {
+      z-index: 9999;
+      position: absolute;
+      height: 8rem;
+    }
+
     .mobileDrawer {
      position: fixed;
      top: 0;
@@ -142,23 +148,15 @@ onMounted(() => {
     }
 
     .mobileList {
-     @media screen and (min-width: 450px) and (max-width: 760px){
-            flex-grow: .2;
-    }
-    @media screen and (min-width: 410px) and (max-width: 450px){
-            flex-grow: .3;
-    }
-
-    @media screen and (min-width: 350px) and (max-width: 410px){
-            flex-grow: .1;
-    }
-
-     flex-grow: 0;
+     flex-grow: 1;
      flex-direction: column;
      display: flex;
      gap: 2rem;
      list-style-type: none;
      justify-content: center;
+     align-content: center;
+     flex-wrap: wrap;
+     padding-left: 0;
     }
 
     .mobileLink {

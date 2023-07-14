@@ -20,6 +20,7 @@ const pageLoaded = ref(false)
 
 onMounted(async () => {
   await contentStore.loadMainPage()
+  await contentStore.loadResumePageContent()
   pageLoaded.value = true
 })
 

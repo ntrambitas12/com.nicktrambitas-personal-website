@@ -1,17 +1,48 @@
 <script setup>
-// Static imports
-import Resume from '@/assets/Hybrid-EV Controls.pdf'
+import { onMounted, ref } from 'vue'
+import { useContentStore } from '@/stores/content'
+import SuspenseDots from '@/assets/suspense.gif'
+const contentStore = useContentStore()
+const pageLoaded = ref(false)
+
+onMounted(async () => {
+  await contentStore.loadResumePageContent()
+  pageLoaded.value = true
+})
 </script>
 <template>
+   <transition name="fade">
+  <div v-if="pageLoaded">
   <div class="ResumeView">
-    <h1>Resume</h1>
-    <embed :src="Resume" type="application/pdf" width="100%" height="600px" class="PDFViewer" />
+    <h1>{{ contentStore.getResumePageContent?.pageTitle }}</h1>
+    <embed :src="contentStore.getResumePageContent?.resumePdf" type="application/pdf" width="100%" height="600px" class="PDFViewer" />
    <div class="ResumeLinkContainer">
-    <a @click="$router.go(-1)" class="ResumeLink" >Go Back</a>
+    <a @click="$router.go(-1)" class="ResumeLink" >{{ contentStore.getResumePageContent?.buttonText }}</a>
    </div>
   </div>
+  </div>
+  <div class="suspenseLoading" v-else>
+    <img :src="SuspenseDots"/>
+  </div>
+  </transition>
 </template>
  <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+.suspenseLoading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
  h1 {
   font-size: 3rem;
   font-weight: 500;

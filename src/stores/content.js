@@ -8,7 +8,8 @@ export const useContentStore = defineStore('content', {
     footerContent: {},
     footerLinks: [],
     mainPageButtons: [],
-    mainPageContent: {}
+    mainPageContent: {},
+    resumePageContent: {}
   }),
   getters: {
     getCarouselSlides (state) {
@@ -33,6 +34,9 @@ export const useContentStore = defineStore('content', {
     },
     getMainPageContent (state) {
       return state.mainPageContent
+    },
+    getResumePageContent (state) {
+      return state.resumePageContent
     }
   },
   actions: {
@@ -99,9 +103,17 @@ export const useContentStore = defineStore('content', {
     async loadMainPageContent () {
       this.mainPageContent = {}
       const apiData = await this.requestPayload(process.env.VUE_APP_API_MAINPAGECONTENT_ID)
-      const content = apiData?.items[0].fields
+      const content = apiData?.items[0]?.fields
       const assets = apiData?.includes
       this.mainPageContent = this.resolveContentAssetLinks(content, assets)
+    },
+
+    async loadResumePageContent () {
+      this.resumePageContent = {}
+      const apiData = await this.requestPayload(process.env.VUE_APP_API_RESUMEPAGECONTENT_ID)
+      const content = apiData?.items[0]?.fields
+      const assets = apiData?.includes
+      this.resumePageContent = this.resolveContentAssetLinks(content, assets)
     },
 
     resolveContentAssetLinks (content, assets) {

@@ -13,14 +13,15 @@ const props = defineProps({
   },
   navbarStickyPoint: {
     type: Number,
-    default: () => 900
+    default: () => 0
   }
 })
 
 const emit = defineEmits(['toggle-scroll'])
 
 const handleScroll = () => {
-  navClass.value = (window.scrollY - 100 >= props.navbarStickyPoint) ? 'navBar sticky' : 'navBar'
+  // disabled sticky until further diagnosis can be performed
+  navClass.value = (window.scrollY >= props.navbarStickyPoint) ? 'navBar sticky' : 'navBar'
 }
 
 const handleResize = () => {

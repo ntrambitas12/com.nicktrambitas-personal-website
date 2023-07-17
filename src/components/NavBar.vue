@@ -87,7 +87,7 @@ onMounted(() => {
     .navBar {
     display: flex;
     flex-direction: row;
-    background-color: #e30b0b4e;
+    background-color: rgba(255, 11, 11, 0.64);
     padding: 0.5rem;
     }
     .sticky {
@@ -120,7 +120,7 @@ onMounted(() => {
     transition: all 0.5s;
 }
     .link:hover {
-    color:rgba(255, 115, 115, 0.8705882353);
+    color:rgba(255, 11, 11, 0.64);
     background-color: white;
     }
 

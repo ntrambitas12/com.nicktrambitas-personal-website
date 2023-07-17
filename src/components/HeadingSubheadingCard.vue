@@ -105,12 +105,16 @@ const zoomImage = computed(() => {
 
     font-size: .9rem;
 }
+
+@media screen and (min-width: 1250px){
+            padding-bottom: 32rem;
+        }
   font-size: 2.4rem;
-  padding-bottom: 31rem;
+  padding-bottom: 35rem;
   letter-spacing: -0.25px;
   justify-content: center;
   align-items: center;
-  color: #ff7373de;
+  color: rgb(255, 11, 11);
   overflow: hidden;
   margin: 0 auto; /* Gives that scrolling effect as the typing happens */
   white-space: nowrap;

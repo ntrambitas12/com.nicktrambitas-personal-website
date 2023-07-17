@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, onMounted, ref } from 'vue'
+import { defineProps, defineEmits, onMounted, ref, computed } from 'vue'
 import hamburgerIcon from '@/assets/nav-hamburger.png'
 import closeIcon from '@/assets/nav-close.png'
 const navClass = ref('navBar')
@@ -27,7 +27,7 @@ const handleScroll = () => {
 const handleResize = () => {
   // 850 px is the trigger to switch to mobile view
   const wasPreviouslyMobile = isMobile.value
-  isMobile.value = (window.innerWidth <= 760)
+  isMobile.value = (window.innerWidth <= 750)
 
   // handle case if drawer was opened and viewport goes back to desktop
   if (!isMobile.value && (wasPreviouslyMobile.value !== isMobile.value)) {
@@ -37,6 +37,10 @@ const handleResize = () => {
     }
   }
 }
+
+const mobileDrawerDisplay = computed(() => {
+  return isDrawerActive.value ? '0em' : '-47em'
+})
 
 const showMobileDrawer = () => {
   isDrawerActive.value = !isDrawerActive.value
@@ -66,7 +70,7 @@ onMounted(() => {
   </div>
 </nav>
 <transition name="slide">
-<div v-if="isDrawerActive" class="mobileDrawer">
+<div class="mobileDrawer">
     <div class="closeDrawer">
         <img class="navPic" :src="closeIcon" @click="showMobileDrawer()"/>
     </div>
@@ -80,16 +84,6 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.5s;
-}
-
-.slide-leave-active,
-.slide-leave-to {
-  transform: translateX(-100%);
-}
-
     .navBar {
     display: flex;
     flex-direction: row;
@@ -153,13 +147,17 @@ onMounted(() => {
     .mobileDrawer {
      position: fixed;
      top: 0;
-     left: 0;
+     left: v-bind(mobileDrawerDisplay);
      width: 100%;
      height: 100%;
      background-color: #f0f0f0ae;
      z-index: 1000000;
-     display: flex;
      flex-direction: row;
+     transition: left .8s;
+     @media screen and (max-width: 750px){
+      display: flex;
+    }
+    display: none;
     }
 
     .mobileList {
